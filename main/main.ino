@@ -1,11 +1,13 @@
-#include <EnableInterrupt.h>
 #include "lib.h"
+#include "game_logic.h"
 
 int leds[] = {L1, L2, L3, L4, LS};
 int buttons[] = {B1, B2, B3, B4};
 boolean buttons_flags[4];
 int count;
 int current_state;
+String welcome_message;
+String go_message;
 
 
 void test_hw() {
@@ -22,38 +24,40 @@ void test_buttons() {
   Serial.println("Clicked");
 }
 
+void green_leds_on() {
+  for (int i = 0; i < 4; i++) {
+    digitalWrite(leds[i], HIGH);
+  }
+}
+
 void setup() {
+  delay(2000);
   Serial.begin(9600);
+  Serial.println("Inizio setup");
   current_state = 0;
+  welcome_message = "Welcome to the Restore the Light Game. Press Key B1 to Start";
+  go_message = "Go!";
   for (int i = 0; i < 5; i++) {
     pinMode(leds[i], OUTPUT); 
   }
-  /*for (int i = 0; i < 4; i++) {
-    //pinMode(buttons[i], INPUT);
-    enableInterrupt(buttons[i], change_button_flag, FALLING);
-  }*/
-  enableInterrupt(buttons[0], change_button1_flag, FALLING);
-  enableInterrupt(buttons[1], change_button2_flag, FALLING);
-  enableInterrupt(buttons[2], change_button3_flag, FALLING);
-  enableInterrupt(buttons[3], change_button4_flag, FALLING);
+  Serial.println(welcome_message);
+  set_interrupt();
   pinMode(POT, INPUT);
   test_hw();
-  //delay(5000);
   for (int i = 0; i < 4; i++) {
     buttons_flags[i] = false;
-    //Serial.println(String("Stato = ") + buttons_flags[i]);
   }
+  
 }
 
 void loop() {
   if (current_state == 0) {
     fading(LS);
   } else if (current_state == 1) {
-    Serial.println(set_difficulty());
+    //set_difficulty());
+    green_leds_on();
+    delay(1000);
+    generate_pattern();
+    show_pattern();
   }
-  /*for (int i = 0; i < 4; i++) {
-    if (buttons_flags[i] == true) {
-      change_button_flag(i);
-    }
-  }*/
 }

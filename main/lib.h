@@ -18,6 +18,12 @@ enum game_conditions {
   SLEEPING
 };
 
+void set_interrupt();
+
+void set2_interrupt();
+
+void unset_interrupt();
+
 void change_button_flag(int);
 
 void change_button1_flag();
@@ -31,5 +37,7 @@ void change_button4_flag();
 void fading(int);
 
 int set_difficulty();
+
+void sleep_now();
 
 #endif
