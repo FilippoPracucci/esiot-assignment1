@@ -55,11 +55,21 @@ void change_button4_flag() {
   buttons_flags[3] = true;
 }
 
+void reset_buttons_flags() {
+  for (int i = 0; i < 4; i++) {
+    buttons_flags[i] = false;
+  }
+}
+
 void fading(int pin) {
   int brightness = 0;
   int fadeAmount = 5;
   unsigned long start_time = millis();
   unsigned long last = millis();
+  Serial.println(buttons_flags[0]);
+  Serial.println(millis());
+  Serial.println(start_time);
+  reset_buttons_flags();
   while ((millis() - start_time) < 10000 && !buttons_flags[0]) {
     if ((millis() - last) > 15) {
       analogWrite(pin, brightness);   
@@ -69,7 +79,7 @@ void fading(int pin) {
       }
       last = millis();      
     }
-    //Serial.println(millis());
+    Serial.println(String("While: ") + millis());
   }
   Serial.println("Fine while");
   if (buttons_flags[0]) {
@@ -90,13 +100,13 @@ int set_difficulty() {
 
 void sleep_now() {
   Serial.println("Inizio sleep");
-  set2_interrupt();
+  //set2_interrupt();
   delay(2000);
   set_sleep_mode(SLEEP_MODE_PWR_DOWN);  
   sleep_enable();
-  sleep_mode();  
-  /** The program will continue from here. **/  
-  fading(LS);
-  /* First thing to do is disable sleep. */  
+  sleep_mode(); 
   sleep_disable(); 
+  Serial.println("Sveglio");
+  reset_buttons_flags();
+  fading(LS);
 }

@@ -34,6 +34,8 @@ void change_button3_flag();
 
 void change_button4_flag();
 
+void reset_buttons_flags();
+
 void fading(int);
 
 int set_difficulty();
