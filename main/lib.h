@@ -34,11 +34,15 @@ void change_button3_flag();
 
 void change_button4_flag();
 
+void green_leds_on();
+
 void reset_buttons_flags();
 
 void fading(int);
 
-int set_difficulty();
+/* Set the difficulty as 1 - the level decided by the trimmer divided by 10.
+   So in the specific case of the game the difficulty range is (0.9 - 0.6)*/
+float set_difficulty();
 
 void sleep_now();
 

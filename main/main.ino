@@ -8,6 +8,8 @@ int count;
 int current_state;
 String welcome_message;
 String go_message;
+String next_level_message;
+String game_over_message;
 
 
 void test_hw() {
@@ -24,19 +26,13 @@ void test_buttons() {
   Serial.println("Clicked");
 }
 
-void green_leds_on() {
-  for (int i = 0; i < 4; i++) {
-    digitalWrite(leds[i], HIGH);
-  }
-}
-
 void setup() {
-  delay(2000);
   Serial.begin(9600);
-  Serial.println("Inizio setup");
   current_state = 0;
   welcome_message = "Welcome to the Restore the Light Game. Press Key B1 to Start";
   go_message = "Go!";
+  next_level_message = "New point! Score: ";
+  game_over_message = "Game Over. Final Score: ";
   for (int i = 0; i < 5; i++) {
     pinMode(leds[i], OUTPUT); 
   }
@@ -56,7 +52,6 @@ void loop() {
       fading(LS);
       break;
     case RUNNING:
-      //set_difficulty());
       green_leds_on();
       delay(1000);
       generate_pattern();
