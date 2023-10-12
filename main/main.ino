@@ -3,7 +3,7 @@
 
 int leds[] = {L1, L2, L3, L4, LS};
 int buttons[] = {B1, B2, B3, B4};
-boolean buttons_flags[4];
+bool buttons_flags[4];
 int count;
 int current_state;
 String welcome_message;
@@ -51,13 +51,19 @@ void setup() {
 }
 
 void loop() {
-  if (current_state == 0) {
-    fading(LS);
-  } else if (current_state == 1) {
-    //set_difficulty());
-    green_leds_on();
-    delay(1000);
-    generate_pattern();
-    show_pattern();
+  switch (current_state) {
+    case WAITING:
+      fading(LS);
+      break;
+    case RUNNING:
+      //set_difficulty());
+      green_leds_on();
+      delay(1000);
+      generate_pattern();
+      show_pattern();
+      inserting_pattern();
+      break;
+    case SLEEPING:
+      break;
   }
 }

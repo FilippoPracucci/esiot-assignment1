@@ -13,4 +13,8 @@ void reset_played_buttons();
 
 void show_pattern();
 
+int num_played_buttons();
+
+void inserting_pattern();
+
 #endif
