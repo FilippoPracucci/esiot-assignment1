@@ -11,7 +11,8 @@ String go_message;
 String next_level_message;
 String game_over_message;
 
-
+/* Uncomment this macro to enable the test of the hardware before running the program. */
+//#define TEST
 void test_hw() {
   for (int i = 0; i < 5; i++) {
     digitalWrite(leds[i], HIGH);
@@ -27,19 +28,26 @@ void test_buttons() {
 }
 
 void setup() {
+  delay(200);   //delay to avoid useless characters' prints.
   Serial.begin(9600);
+  for (int i = 0; i < 5; i++) {
+    pinMode(leds[i], OUTPUT); 
+  }
+
+  #ifdef TEST
+  test_hw();
+  #endif
+
+  randomSeed(analogRead(0));
   current_state = 0;
   welcome_message = "Welcome to the Restore the Light Game. Press Key B1 to Start";
   go_message = "Go!";
   next_level_message = "New point! Score: ";
   game_over_message = "Game Over. Final Score: ";
-  for (int i = 0; i < 5; i++) {
-    pinMode(leds[i], OUTPUT); 
-  }
+  //Serial.flush();
   Serial.println(welcome_message);
   set_interrupt();
   pinMode(POT, INPUT);
-  test_hw();
   for (int i = 0; i < 4; i++) {
     buttons_flags[i] = false;
   }

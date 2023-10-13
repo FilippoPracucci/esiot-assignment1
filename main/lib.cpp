@@ -93,6 +93,7 @@ void fading(int pin) {
       last = millis();      
     }
   }
+  digitalWrite(LS, LOW);
   if (buttons_flags[0]) {
     change_button_flag(0);
     current_state = 1;
@@ -101,7 +102,6 @@ void fading(int pin) {
     current_state = 2;
     sleep_now();
   }
-  digitalWrite(LS, LOW);
   f = set_difficulty();
 }
 
@@ -110,7 +110,6 @@ float set_difficulty() {
 }
 
 void sleep_now() {
-  delay(2000);
   set_sleep_mode(SLEEP_MODE_PWR_DOWN);  
   sleep_enable();
   sleep_mode(); 

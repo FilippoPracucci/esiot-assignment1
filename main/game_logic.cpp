@@ -1,8 +1,7 @@
 #include "lib.h"
 #include "game_logic.h"
 #include <stdio.h>  
-#include <stdlib.h>  
-#include <time.h>
+#include <stdlib.h>
 #include <Arduino.h>
 
 unsigned long t2 = T2;
@@ -21,9 +20,8 @@ void generate_pattern() {
   int n;
   int j;
   
-  srand((unsigned int) time(NULL));
   for (int i = 0; i < DIM; i++) {
-    n = random(0, DIM);
+    n = random(DIM);
     for (j = 0; j < i; j++) {
       if (n == pattern[j]) {
         i--;
@@ -78,13 +76,24 @@ void inserting_pattern() {
     for (int i = 0; i < 4; i++) {
       if (buttons_flags[i]) {
         add_played_button(i);
+        //Serial.println(String("Pulsante premuto: ") + i);
         change_button_flag(i);
       }
     }
   } while (millis() - start_time < t3 && num_played_buttons() < 4);
+  Serial.println("Pattern: ");
+  for (int i = 0; i < DIM; i++) {
+    Serial.println(pattern[i]);
+  }
+  Serial.println("Inseriti: ");
+  for (int i = 0; i < DIM; i++) {
+    Serial.println(played[i]);
+  }
   if (is_correct()) {
-    t2 = t2 * f;
-    t3 = t3 * f;
+    if (score < 6) {
+      t2 = t2 * f;
+      t3 = t3 * f;
+    }
     Serial.println(next_level_message + (++score));
   } else {
     end_game();
@@ -97,6 +106,7 @@ void end_game() {
   digitalWrite(LS, HIGH);
   delay(1000);
   digitalWrite(LS, LOW);
+  init_setup();
   fading(LS);
 }
 
