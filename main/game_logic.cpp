@@ -76,19 +76,10 @@ void inserting_pattern() {
     for (int i = 0; i < 4; i++) {
       if (buttons_flags[i]) {
         add_played_button(i);
-        //Serial.println(String("Pulsante premuto: ") + i);
-        change_button_flag(i);
+        reset_button_flag(i);
       }
     }
   } while (millis() - start_time < t3 && num_played_buttons() < 4);
-  Serial.println("Pattern: ");
-  for (int i = 0; i < DIM; i++) {
-    Serial.println(pattern[i]);
-  }
-  Serial.println("Inseriti: ");
-  for (int i = 0; i < DIM; i++) {
-    Serial.println(played[i]);
-  }
   if (is_correct()) {
     if (score < 6) {
       t2 = t2 * f;

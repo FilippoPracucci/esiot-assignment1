@@ -44,7 +44,6 @@ void setup() {
   go_message = "Go!";
   next_level_message = "New point! Score: ";
   game_over_message = "Game Over. Final Score: ";
-  //Serial.flush();
   Serial.println(welcome_message);
   set_interrupt();
   pinMode(POT, INPUT);

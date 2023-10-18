@@ -12,38 +12,71 @@
 #define LS 6
 #define POT A0
 
-enum game_conditions {
+enum game_state {
   WAITING,
   RUNNING,
   SLEEPING
 };
 
+/*
+* Enables and configures all the interrupts.
+*/
 void set_interrupt();
 
-void set2_interrupt();
+/*
+* Reset the button flag of the led's pin passed.
+*/
+void reset_button_flag(int);
 
-void unset_interrupt();
-
-void change_button_flag(int);
-
+/*
+* Change the flag of the first button to true, managing the bouncing.
+*/
 void change_button1_flag();
 
+/*
+* Change the flag of the second button to true, managing the bouncing.
+*/
 void change_button2_flag();
 
+/*
+* Change the flag of the third button to true, managing the bouncing.
+*/
 void change_button3_flag();
 
+/*
+* Change the flag of the fourth button to true, managing the bouncing.
+*/
 void change_button4_flag();
 
+/*
+* Turns on all the green leds.
+*/
 void green_leds_on();
 
-void reset_buttons_flags();
+/*
+* Resets all the flags of the buttons.
+*/
+void reset_all_buttons_flags();
 
+/*
+* Controls the fading of a led by passing its pin number.
+*/
 void fading(int);
 
-/* Set the difficulty as 1 - the level decided by the trimmer divided by 10.
-   So in the specific case of the game the difficulty range is (0.9 - 0.6)*/
+/* 
+* Set the difficulty as 1 - the level decided by the trimmer divided by 10.
+  So in the specific case of the game the difficulty range is (0.9 - 0.6)
+*/
 float set_difficulty();
 
+/*
+* Puts arduino in deep sleep.
+*/
 void sleep_now();
+
+/*
+* Wakes up arduino.
+*/
+void wake_up();
 
 #endif

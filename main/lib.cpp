@@ -18,14 +18,14 @@ void set_interrupt() {
   enableInterrupt(buttons[3], change_button4_flag, RISING);
 }
 
-void change_button_flag(int pos) {
+void reset_button_flag(int pos) {
   buttons_flags[pos] = false;
 }
 
 void change_button1_flag() {
   static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();
-  // If interrupts come faster than 200ms, assume it's a bounce and ignore
+  // If interrupts come faster than 500ms, assume it's a bounce and ignore
   if (interrupt_time - last_interrupt_time > 500)
   {
     buttons_flags[0] = true;
@@ -36,7 +36,7 @@ void change_button1_flag() {
 void change_button2_flag() {
   static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();
-  // If interrupts come faster than 200ms, assume it's a bounce and ignore
+  // If interrupts come faster than 500ms, assume it's a bounce and ignore
   if (interrupt_time - last_interrupt_time > 500)
   {
     buttons_flags[1] = true;
@@ -47,7 +47,7 @@ void change_button2_flag() {
 void change_button3_flag() {
   static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();
-  // If interrupts come faster than 200ms, assume it's a bounce and ignore
+  // If interrupts come faster than 500ms, assume it's a bounce and ignore
   if (interrupt_time - last_interrupt_time > 500)
   {
     buttons_flags[2] = true;
@@ -58,7 +58,7 @@ void change_button3_flag() {
 void change_button4_flag() {
   static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();
-  // If interrupts come faster than 200ms, assume it's a bounce and ignore
+  // If interrupts come faster than 500ms, assume it's a bounce and ignore
   if (interrupt_time - last_interrupt_time > 500)
   {
     buttons_flags[3] = true;
@@ -72,9 +72,9 @@ void green_leds_on() {
   }
 }
 
-void reset_buttons_flags() {
+void reset_all_buttons_flags() {
   for (int i = 0; i < 4; i++) {
-    buttons_flags[i] = false;
+    reset_button_flag(i);
   }
 }
 
@@ -95,12 +95,14 @@ void fading(int pin) {
   }
   digitalWrite(LS, LOW);
   if (buttons_flags[0]) {
-    change_button_flag(0);
+    reset_button_flag(0);
     current_state = 1;
     Serial.println(go_message);
   } else {
     current_state = 2;
     sleep_now();
+    //wakes up after an interrupt
+    wake_up();
   }
   f = set_difficulty();
 }
@@ -112,8 +114,11 @@ float set_difficulty() {
 void sleep_now() {
   set_sleep_mode(SLEEP_MODE_PWR_DOWN);  
   sleep_enable();
-  sleep_mode(); 
+  sleep_mode();
+}
+
+void wake_up() {
   sleep_disable(); 
-  reset_buttons_flags();
+  reset_all_buttons_flags();
   fading(LS);
 }
