@@ -17,8 +17,7 @@ extern String next_level_message;
 extern String game_over_message;
 
 void generate_pattern() {
-  int n;
-  int j;
+  int n, j;
   
   for (int i = 0; i < DIM; i++) {
     n = random(DIM);
@@ -65,8 +64,7 @@ void show_pattern() {
 
 int num_played_buttons() {
   int i;
-  for (i = 0; i < DIM && played[i] != 4; i++) {
-  }
+  for (i = 0; i < DIM && played[i] != 4; i++) {}
   return i;
 }
 

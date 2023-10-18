@@ -11,6 +11,8 @@
 #define B4 11
 #define LS 6
 #define POT A0
+#define DEBOUNCE_TIME 500
+#define FADING_TIME 10000
 
 enum game_state {
   WAITING,

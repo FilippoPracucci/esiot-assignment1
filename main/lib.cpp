@@ -26,8 +26,7 @@ void change_button1_flag() {
   static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();
   // If interrupts come faster than 500ms, assume it's a bounce and ignore
-  if (interrupt_time - last_interrupt_time > 500)
-  {
+  if (interrupt_time - last_interrupt_time > DEBOUNCE_TIME) {
     buttons_flags[0] = true;
   }
   last_interrupt_time = interrupt_time;
@@ -37,8 +36,7 @@ void change_button2_flag() {
   static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();
   // If interrupts come faster than 500ms, assume it's a bounce and ignore
-  if (interrupt_time - last_interrupt_time > 500)
-  {
+  if (interrupt_time - last_interrupt_time > DEBOUNCE_TIME) {
     buttons_flags[1] = true;
   }
   last_interrupt_time = interrupt_time;
@@ -48,8 +46,7 @@ void change_button3_flag() {
   static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();
   // If interrupts come faster than 500ms, assume it's a bounce and ignore
-  if (interrupt_time - last_interrupt_time > 500)
-  {
+  if (interrupt_time - last_interrupt_time > DEBOUNCE_TIME) {
     buttons_flags[2] = true;
   }
   last_interrupt_time = interrupt_time;
@@ -59,8 +56,7 @@ void change_button4_flag() {
   static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();
   // If interrupts come faster than 500ms, assume it's a bounce and ignore
-  if (interrupt_time - last_interrupt_time > 500)
-  {
+  if (interrupt_time - last_interrupt_time > DEBOUNCE_TIME) {
     buttons_flags[3] = true;
   }
   last_interrupt_time = interrupt_time;
@@ -83,7 +79,7 @@ void fading(int pin) {
   int fadeAmount = 5;
   unsigned long start_time = millis();
   unsigned long last = millis();
-  while ((millis() - start_time) < 10000 && !buttons_flags[0]) {
+  while ((millis() - start_time) < FADING_TIME && !buttons_flags[0]) {
     if ((millis() - last) > 15) {
       analogWrite(pin, brightness);   
       brightness = brightness + fadeAmount;

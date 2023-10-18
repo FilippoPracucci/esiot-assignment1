@@ -38,7 +38,7 @@ void setup() {
   test_hw();
   #endif
 
-  randomSeed(analogRead(0));
+  randomSeed(analogRead(0));  //fake reading to generate a different random seed
   current_state = 0;
   welcome_message = "Welcome to the Restore the Light Game. Press Key B1 to Start";
   go_message = "Go!";
@@ -47,10 +47,7 @@ void setup() {
   Serial.println(welcome_message);
   set_interrupt();
   pinMode(POT, INPUT);
-  for (int i = 0; i < 4; i++) {
-    buttons_flags[i] = false;
-  }
-  
+  reset_all_buttons_flags();
 }
 
 void loop() {
@@ -60,7 +57,7 @@ void loop() {
       break;
     case RUNNING:
       green_leds_on();
-      delay(1000);
+      delay(random(2000) + 1000);
       generate_pattern();
       show_pattern();
       inserting_pattern();
