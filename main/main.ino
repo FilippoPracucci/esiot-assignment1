@@ -1,3 +1,7 @@
+/*
+* Riccardo Penazzi 0001021734 riccardo.penazzi@studio.unibo.it
+* Filippo Pracucci 0001020606 filippo.pracucci@studio.unibo.it
+*/
 #include "lib.h"
 #include "game_logic.h"
 
