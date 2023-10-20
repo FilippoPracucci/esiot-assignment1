@@ -26,11 +26,6 @@ enum game_state {
 void set_interrupt();
 
 /*
-* Reset the button flag of the led's pin passed.
-*/
-//void reset_button_flag(int);
-
-/*
 * Change the flag of the first button to true, managing the bouncing.
 */
 void change_button1_flag();
@@ -80,5 +75,10 @@ void sleep_now();
 * Wakes up arduino.
 */
 void wake_up();
+
+/*
+* Shows the difficulty level.
+*/
+void show_difficulty();
 
 #endif

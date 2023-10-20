@@ -18,7 +18,6 @@ extern String game_over_message;
 
 void generate_pattern() {
   int n, j;
-  
   for (int i = 0; i < DIM; i++) {
     n = random(DIM);
     for (j = 0; j < i; j++) {
@@ -74,7 +73,6 @@ void inserting_pattern() {
     for (int i = 0; i < 4; i++) {
       if (buttons_flags[i]) {
         add_played_button(i);
-        //reset_button_flag(i);
         buttons_flags[i] = false;
       }
     }
@@ -104,9 +102,4 @@ void init_setup() {
   t2 = T2;
   t3 = T3;
   score = 0;
-}
-void help() {
-  for (int i = 3; i >= 0; i--) {
-    Serial.println(pattern[i] + 1);
-  }
 }

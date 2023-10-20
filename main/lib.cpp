@@ -18,16 +18,11 @@ void set_interrupt() {
   enableInterrupt(buttons[3], change_button4_flag, RISING);
 }
 
-void reset_button_flag(int pos) {
-  buttons_flags[pos] = false;
-}
-
 void change_button1_flag() {
   static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();
-  // If interrupts come faster than 500ms, assume it's a bounce and ignore
+  // If interrupt comes faster than 500ms, assume it's a bounce and ignore
   if (interrupt_time - last_interrupt_time > DEBOUNCE_TIME) {
-    Serial.println("Premuto pulsante 1");
     buttons_flags[0] = true;
   }
   last_interrupt_time = interrupt_time;
@@ -36,9 +31,8 @@ void change_button1_flag() {
 void change_button2_flag() {
   static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();
-  // If interrupts come faster than 500ms, assume it's a bounce and ignore
+  // If interrupt comes faster than 500ms, assume it's a bounce and ignore
   if (interrupt_time - last_interrupt_time > DEBOUNCE_TIME) {
-    Serial.println("Premuto pulsante 2");
     buttons_flags[1] = true;
   }
   last_interrupt_time = interrupt_time;
@@ -47,9 +41,8 @@ void change_button2_flag() {
 void change_button3_flag() {
   static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();
-  // If interrupts come faster than 500ms, assume it's a bounce and ignore
+  // If interrupt comes faster than 500ms, assume it's a bounce and ignore
   if (interrupt_time - last_interrupt_time > DEBOUNCE_TIME) {
-    Serial.println("Premuto pulsante 3");
     buttons_flags[2] = true;
   }
   last_interrupt_time = interrupt_time;
@@ -58,9 +51,8 @@ void change_button3_flag() {
 void change_button4_flag() {
   static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();
-  // If interrupts come faster than 500ms, assume it's a bounce and ignore
+  // If interrupt comes faster than 500ms, assume it's a bounce and ignore
   if (interrupt_time - last_interrupt_time > DEBOUNCE_TIME) {
-    Serial.println("Premuto pulsante 4");
     buttons_flags[3] = true;
   }
   last_interrupt_time = interrupt_time;
@@ -73,9 +65,10 @@ void green_leds_on() {
 }
 
 void reset_all_buttons_flags() {
-  for (int i = 0; i < 4; i++) {
-    reset_button_flag(i);
-  }
+  buttons_flags[0] = false;
+  buttons_flags[1] = false;
+  buttons_flags[2] = false;
+  buttons_flags[3] = false;
 }
 
 void fading(int pin) {
@@ -95,7 +88,6 @@ void fading(int pin) {
   }
   digitalWrite(LS, LOW);
   if (buttons_flags[0]) {
-    //reset_button_flag(0);
     buttons_flags[0] = false;
     current_state = 1;
     Serial.println(go_message);
@@ -106,10 +98,12 @@ void fading(int pin) {
     wake_up();
   }
   f = set_difficulty();
+  show_difficulty();
 }
 
 float set_difficulty() {
-  return (1.00 - (map(analogRead(POT), 0, 1023, 1, 4) / 10.00));
+  //Used 1024 instead of 1023 to fix the inability to reach the max difficulty level
+  return (1.00 - (map(analogRead(POT), 0, 1024, 1, 5) / 10.00)); 
 }
 
 void sleep_now() {
@@ -122,4 +116,18 @@ void wake_up() {
   sleep_disable(); 
   reset_all_buttons_flags();
   fading(LS);
+}
+
+void show_difficulty() {
+  int diff;
+  if (f == 0.9) {
+    diff = 1;
+  } else if (f == 0.8) {
+    diff = 2;
+  } else if (f == 0.7) {
+    diff = 3;
+  } else {
+    diff = 4;
+  }
+  Serial.println("Difficolta' selezionata: " + String(diff) + " su 4");
 }

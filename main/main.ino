@@ -64,8 +64,6 @@ void loop() {
       delay(random(2000) + 1000);
       generate_pattern();
       show_pattern();
-      help();
-      delay(1000);
       inserting_pattern();
       break;
     case SLEEPING:
