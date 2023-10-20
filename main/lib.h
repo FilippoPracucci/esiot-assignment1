@@ -28,7 +28,7 @@ void set_interrupt();
 /*
 * Reset the button flag of the led's pin passed.
 */
-void reset_button_flag(int);
+//void reset_button_flag(int);
 
 /*
 * Change the flag of the first button to true, managing the bouncing.

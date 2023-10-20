@@ -50,4 +50,6 @@ void end_game();
 */
 void init_setup();
 
+void help();
+
 #endif

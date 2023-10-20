@@ -27,6 +27,7 @@ void change_button1_flag() {
   unsigned long interrupt_time = millis();
   // If interrupts come faster than 500ms, assume it's a bounce and ignore
   if (interrupt_time - last_interrupt_time > DEBOUNCE_TIME) {
+    Serial.println("Premuto pulsante 1");
     buttons_flags[0] = true;
   }
   last_interrupt_time = interrupt_time;
@@ -37,6 +38,7 @@ void change_button2_flag() {
   unsigned long interrupt_time = millis();
   // If interrupts come faster than 500ms, assume it's a bounce and ignore
   if (interrupt_time - last_interrupt_time > DEBOUNCE_TIME) {
+    Serial.println("Premuto pulsante 2");
     buttons_flags[1] = true;
   }
   last_interrupt_time = interrupt_time;
@@ -47,6 +49,7 @@ void change_button3_flag() {
   unsigned long interrupt_time = millis();
   // If interrupts come faster than 500ms, assume it's a bounce and ignore
   if (interrupt_time - last_interrupt_time > DEBOUNCE_TIME) {
+    Serial.println("Premuto pulsante 3");
     buttons_flags[2] = true;
   }
   last_interrupt_time = interrupt_time;
@@ -57,6 +60,7 @@ void change_button4_flag() {
   unsigned long interrupt_time = millis();
   // If interrupts come faster than 500ms, assume it's a bounce and ignore
   if (interrupt_time - last_interrupt_time > DEBOUNCE_TIME) {
+    Serial.println("Premuto pulsante 4");
     buttons_flags[3] = true;
   }
   last_interrupt_time = interrupt_time;
@@ -91,7 +95,8 @@ void fading(int pin) {
   }
   digitalWrite(LS, LOW);
   if (buttons_flags[0]) {
-    reset_button_flag(0);
+    //reset_button_flag(0);
+    buttons_flags[0] = false;
     current_state = 1;
     Serial.println(go_message);
   } else {

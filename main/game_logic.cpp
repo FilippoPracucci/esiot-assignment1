@@ -74,7 +74,8 @@ void inserting_pattern() {
     for (int i = 0; i < 4; i++) {
       if (buttons_flags[i]) {
         add_played_button(i);
-        reset_button_flag(i);
+        //reset_button_flag(i);
+        buttons_flags[i] = false;
       }
     }
   } while (millis() - start_time < t3 && num_played_buttons() < 4);
@@ -103,4 +104,9 @@ void init_setup() {
   t2 = T2;
   t3 = T3;
   score = 0;
+}
+void help() {
+  for (int i = 3; i >= 0; i--) {
+    Serial.println(pattern[i] + 1);
+  }
 }
