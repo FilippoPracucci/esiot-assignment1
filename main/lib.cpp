@@ -10,6 +10,7 @@ extern int count;
 extern int current_state;
 extern String go_message;
 float f;
+int current_difficulty;
 
 void set_interrupt() {
   enableInterrupt(buttons[0], change_button1_flag, RISING);
@@ -106,10 +107,25 @@ void fading(int pin) {
     wake_up();
   }
   f = set_difficulty();
+  Serial.println("Mostro difficolta");
+  show_difficulty();
+  Serial.println("Ho finito di mostrare difficolta");
 }
 
 float set_difficulty() {
-  return (1.00 - (map(analogRead(POT), 0, 1023, 1, 4) / 10.00));
+  float val = (1.00 - (map(analogRead(POT), 0, 1023, 1, 4) / 10.00));
+  Serial.println("Imposto difficolta");
+  if (val == 0.9) {
+    current_difficulty = 0;
+  } else if (val == 0.8) {
+    current_difficulty = 1;
+  } else if (val == 0.7) {
+    current_difficulty = 2;
+  } else if (val == 0.6) {
+    current_difficulty = 3;
+  }
+  Serial.println(current_difficulty);
+  return val;
 }
 
 void sleep_now() {
@@ -122,4 +138,29 @@ void wake_up() {
   sleep_disable(); 
   reset_all_buttons_flags();
   fading(LS);
+}
+
+void show_difficulty() {
+  switch (current_difficulty) {
+    case EASY: switch_on_leds(1);
+         break;
+    case MEDIUM: switch_on_leds(2);
+         break;
+    case DIFFICULT: switch_on_leds(3);
+         break;
+    case EXTREME: switch_on_leds(4);
+         break;
+  }
+}
+
+void switch_on_leds(int n) {
+  Serial.println(String("Devo accendere: ") + n + String(" led"));
+  for (int i = 0; i < n; i++) {
+    digitalWrite(leds[i], HIGH);
+  }
+  delay(2000);
+  for (int i = 0; i < n; i++) {
+    digitalWrite(leds[i], LOW);
+  }
+  delay(1000);
 }

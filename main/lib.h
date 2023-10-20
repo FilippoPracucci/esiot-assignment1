@@ -20,6 +20,13 @@ enum game_state {
   SLEEPING
 };
 
+enum difficulty {
+  EASY,
+  MEDIUM,
+  DIFFICULT,
+  EXTREME
+};
+
 /*
 * Enables and configures all the interrupts.
 */
@@ -80,5 +87,9 @@ void sleep_now();
 * Wakes up arduino.
 */
 void wake_up();
+
+void show_difficulty();
+
+void switch_on_leds(int n);
 
 #endif
