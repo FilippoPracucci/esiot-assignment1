@@ -65,10 +65,9 @@ void green_leds_on() {
 }
 
 void reset_all_buttons_flags() {
-  buttons_flags[0] = false;
-  buttons_flags[1] = false;
-  buttons_flags[2] = false;
-  buttons_flags[3] = false;
+  for (int i = 0; i < DIM; i++) {
+    buttons_flags[i] = false;
+  }
 }
 
 void fading(int pin) {

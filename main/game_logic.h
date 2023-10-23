@@ -1,7 +1,6 @@
 #ifndef __GAME_LOGIC_H__
 #define __GAME_LOGIC_H__
 
-#define DIM 4
 #define T2 8000
 #define T3 15000
 
